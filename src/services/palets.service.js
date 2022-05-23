@@ -1,7 +1,7 @@
 const palets = [
   {
     id: 1,
-    flavor: 'Açaí com Leite Condensado',
+    flavor: 'Açaí with condensed milk',
     description:
       'Quam vulputate dignissim suspendisse in est ante in nibh mauris.',
     photo: 'assets/images/acai-com-leite-condensado.png',
@@ -9,7 +9,7 @@ const palets = [
   },
   {
     id: 2,
-    flavor: 'Banana com Nutella',
+    flavor: 'Banana with Nutella',
     description:
       'Quam vulputate dignissim suspendisse in est ante in nibh mauris.',
     photo: 'assets/images/banana-com-nutella.png',
@@ -17,7 +17,7 @@ const palets = [
   },
   {
     id: 3,
-    flavor: 'Chocolate Belga',
+    flavor: 'Belgian Chocolate',
     description:
       'Quam vulputate dignissim suspendisse in est ante in nibh mauris.',
     photo: 'assets/images/chocolate-belga.png',
@@ -25,7 +25,7 @@ const palets = [
   },
   {
     id: 4,
-    flavor: 'Limão',
+    flavor: 'Lemon',
     description:
       'Quam vulputate dignissim suspendisse in est ante in nibh mauris.',
     photo: 'assets/images/limao.png',

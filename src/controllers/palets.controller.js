@@ -63,8 +63,8 @@ export const updatePaletController = (req, res) => {
 
 export const deletePaletController = (req, res) => {
   const idParam = Number(req.params.id);
-  const chosenPalet = paletsService.findPaletByIdService(idParam);
-  if (!chosenPalet) {
+  // const chosenPalet = paletsService.findPaletByIdService(idParam);
+  if (!idParam) {
     return res.status(404).send({ message: 'Palet not found!' });
   } else {
     paletsService.deletePaletService(idParam);
