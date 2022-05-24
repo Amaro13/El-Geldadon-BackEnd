@@ -1,18 +1,25 @@
 import * as paletsService from '../services/palets.service.js';
+import mongoose from 'mongoose';
 
 // const paletsService = require('../services/paletas.service');
 // const paletsService = palets;
-export const findPaletsController = (req, res) => {
-  const allPalets = paletsService.findPaletsService();
+export const findPaletsController = async (req, res) => {
+  const allPalets = await paletsService.findPaletsService();
   res.send(allPalets);
 };
 
-export const findPaletByIdController = (req, res) => {
-  const idParam = Number(req.params.id);
+export const findPaletByIdController = async (req, res) => {
+  const idParam = req.params.id;
   // if (!idParam) {
   //   return res.status(404).send({ message: 'Palet not found!' });
   // }
-  const chosenPalet = paletsService.findPaletByIdService(idParam);
+  if (!mongoose.Types.ObjectId.isValid(idParam)) {
+    res.status(400).send({ message: 'Invalid ID!' });
+    return;
+  }
+
+  const chosenPalet = await paletsService.findPaletByIdService(idParam);
+
   if (!chosenPalet) {
     return res.status(404).send({ message: 'Palet not found!' });
   }

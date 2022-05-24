@@ -1,8 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import { routes } from './src/router/palets.route.js';
+import { connectToDatabase } from './src/database/database.js';
+
 const port = 3001;
 const app = express();
+connectToDatabase();
 // REMEMBER TO RUN BACK AND FRONT TOGETHER THIS MEANS RUN DEV AND LIVE-SERVER
 // app.use(json());
 app.use(cors());
