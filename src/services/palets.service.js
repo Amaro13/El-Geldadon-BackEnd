@@ -45,21 +45,24 @@ export const findPaletByIdService = async (id) => {
   return palet;
 };
 
-export const createPaletService = (newPalet) => {
-  const newId = palets.length + 1;
-  newPalet.id = newId;
-  palets.push(newPalet);
-  return newPalet;
+export const createPaletService = async (newPalet) => {
+  // const newId = palets.length + 1;
+  // newPalet.id = newId;
+  // palets.push(newPalet);
+  const createdPalet = await Palet.create(newPalet); // Now with mongoDB
+  return createdPalet;
 };
 
-export const updatePaletService = (id, paletEdited) => {
-  paletEdited['id'] = id;
-  const paletIndex = palets.findIndex((palet) => palet.id == id);
-  palets[paletIndex] = paletEdited;
-  return paletEdited;
+export const updatePaletService = async (id, paletEdited) => {
+  // paletEdited['id'] = id;
+  // const paletIndex = palets.findIndex((palet) => palet.id == id);
+  // palets[paletIndex] = paletEdited;
+  const UpdatePalet = await Palet.findByIdAndUpdate(id, paletEdited); // Now with mongoDB
+  return UpdatePalet;
 };
 
-export const deletePaletService = (id) => {
-  const paletIndex = palets.findIndex((palet) => palet.id == id);
-  return palets.splice(paletIndex, 1);
+export const deletePaletService = async (id) => {
+  // const paletIndex = palets.findIndex((palet) => palet.id == id);
+  // return palets.splice(paletIndex, 1);
+  return await Palet.findByIdAndDelete(id); // Now with mongoDB
 };
