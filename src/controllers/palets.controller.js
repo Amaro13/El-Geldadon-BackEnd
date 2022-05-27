@@ -22,6 +22,7 @@ export const findPaletByIdController = async (req, res) => {
   // } // with mongoDB
 
   const chosenPalet = await paletsService.findPaletByIdService(idParam);
+
   if (!chosenPalet) {
     return res.status(404).send({ message: 'Palet not found!' });
   } //mongoDB in middleware
