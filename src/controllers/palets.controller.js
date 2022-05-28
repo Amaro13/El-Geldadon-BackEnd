@@ -1,5 +1,5 @@
 import * as paletsService from '../services/palets.service.js';
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose'; in milldeware
 
 // const paletsService = require('../services/paletas.service');
 // const paletsService = palets;

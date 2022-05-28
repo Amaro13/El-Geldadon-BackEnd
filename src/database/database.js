@@ -2,10 +2,13 @@ import mongoose from 'mongoose';
 
 export function connectToDatabase() {
   mongoose
-    .connect('mongodb://localhost:27017/palets-db', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
+    .connect(
+      'mongodb+srv://Rikuster:Learning@cluster0.bgnacos.mongodb.net/?retryWrites=true&w=majority',
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      },
+    )
     .then(() => {
       console.log('MONGO DB CONECTED');
     })
