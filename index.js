@@ -2,8 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import { routes } from './src/router/palets.route.js';
 import { connectToDatabase } from './src/database/database.js';
+import 'dotenv/config';
 
-const port = 3001;
+const port = process.env.PORT || 3001;
 const app = express();
 connectToDatabase();
 // REMEMBER TO RUN BACK AND FRONT TOGETHER THIS MEANS RUN DEV AND LIVE-SERVER
@@ -25,5 +26,5 @@ app.use('/palets', routes);
 // });
 
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running at ${port}`);
 });

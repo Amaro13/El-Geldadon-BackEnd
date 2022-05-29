@@ -2,15 +2,12 @@ import mongoose from 'mongoose';
 
 export function connectToDatabase() {
   mongoose
-    .connect(
-      'mongodb+srv://Rikuster:Learning@cluster0.bgnacos.mongodb.net/?retryWrites=true&w=majority',
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      },
-    )
+    .connect(process.env.URI_DATABASE, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
     .then(() => {
-      console.log('MONGO DB CONECTED');
+      console.log('MONGO DB ATLAS CONECTED');
     })
     .catch((err) => {
       return console.log(`Error in database conection: ${err}`);
