@@ -7,4 +7,6 @@ const UserSchema = new mongoose.Schema({
   adm: { type: Boolean, required: true, default: false },
 });
 
-export const Palet = mongoose.model('palets', PaletSchema);
+const User = mongoose.model('users', UserSchema);
+
+export default User;

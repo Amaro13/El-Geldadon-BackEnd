@@ -1,36 +1,40 @@
-import express from 'express';
-import * as controllerPalets from '../controllers/palets.controller.js';
-// const controllerPalets = require('../controllers/palets.controller.js');
-import * as controllerCart from '../controllers/cart.controller.js';
-import {
-  validId,
-  validObjectBody,
-  validObjectBodyCart,
-} from '../middlewares/palet.middleware.js';
+import { Router } from 'express';
+import controllerPalets from '../controllers/palets.controller.js';
+import { validId, validObjectBody } from '../middlewares/palet.middleware.js';
 // import swaggerUi from 'swagger-ui-express';
 // import swaggerDocument from '../../swagger.js';
 
-export const routes = express.Router();
+const paletroutes = Router();
+const paletsControllers = new controllerPalets();
 
 // routes.get('/api-docs', swaggerUi.serve);
 // routes.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
-routes.get('/all-palets', controllerPalets.findPaletsController);
-routes.get('/palet/:id', validId, controllerPalets.findPaletByIdController);
-routes.post('/create', validObjectBody, controllerPalets.createPaletController);
-routes.put(
+paletroutes.get('/all-palets', paletsControllers.findPaletsController);
+
+paletroutes.get(
+  '/palet/:id',
+  validId,
+  paletsControllers.findPaletByIdController,
+);
+
+paletroutes.post(
+  '/create',
+  validObjectBody,
+  paletsControllers.createPaletController,
+);
+
+paletroutes.put(
   '/update/:id',
   validId,
   validObjectBody,
-  controllerPalets.updatePaletController,
+  paletsControllers.updatePaletController,
 );
-routes.delete('/delete/:id', validId, controllerPalets.deletePaletController);
 
-routes.get('/all-cart', controllerCart.findAllCartController);
-
-routes.post(
-  '/create-cart',
-  validObjectBodyCart,
-  controllerCart.createItemsCartController,
+paletroutes.delete(
+  '/delete/:id',
+  validId,
+  paletsControllers.deletePaletController,
 );
-routes.delete('/finish-cart', controllerCart.deleteItemsCartController);
+
+export default paletroutes;

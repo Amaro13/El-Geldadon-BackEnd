@@ -1,106 +1,64 @@
-import * as paletsService from '../services/palets.service.js';
-// import mongoose from 'mongoose'; in milldeware
+import paletsService from '../services/palets.service.js';
 
-// const paletsService = require('../services/paletas.service');
-// const paletsService = palets;
-export const findPaletsController = async (req, res) => {
-  const allPalets = await paletsService.findPaletsService();
-  if (allPalets.length == 0) {
-    return res.status(404).send({ message: 'There is no registered Palet!' });
+const paletsservice = new paletsService();
+
+class controllerPalets {
+  async findPaletsController(req, res) {
+    const allPalets = await paletsservice.findPaletsService();
+    if (allPalets.length == 0) {
+      return res.status(404).send({ message: 'There is no registered Palet!' });
+    }
+    res.send(allPalets);
   }
-  res.send(allPalets);
-};
 
-export const findPaletByIdController = async (req, res) => {
-  const idParam = req.params.id;
-  // if (!idParam) {
-  //   return res.status(404).send({ message: 'Palet not found!' });
-  // }
-  // if (!mongoose.Types.ObjectId.isValid(idParam)) {
-  //   res.status(400).send({ message: 'Invalid ID!' });
-  //   return;
-  // } // with mongoDB
+  async findPaletByIdController(req, res) {
+    const idParam = req.params.id;
 
-  const chosenPalet = await paletsService.findPaletByIdService(idParam);
+    const chosenPalet = await paletsservice.findPaletByIdService(idParam);
 
-  if (!chosenPalet) {
-    return res.status(404).send({ message: 'Palet not found!' });
-  } //mongoDB in middleware
+    if (!chosenPalet) {
+      return res.status(404).send({ message: 'Palet not found!' });
+    } //mongoDB in middleware
 
-  res.send(chosenPalet);
-};
+    res.send(chosenPalet);
+  }
 
-export const createPaletController = async (req, res) => {
-  const palet = req.body;
-  // if (
-  //   !palet ||
-  //   !palet.flavor ||
-  //   !palet.description ||
-  //   !palet.photo ||
-  //   !palet.price
-  // ) {
-  //   return res.status(400).send({
-  //     mensagem:
-  //       'You have not filled all the required info to add the palet into the menu!',
-  //   });
-  // } //in middleware
+  async createPaletController(req, res) {
+    const palet = req.body;
 
-  const newPalet = await paletsService.createPaletService(palet);
-  res.status(201).send(newPalet);
-};
+    try {
+      const newPalet = await paletsservice.createPaletService(palet);
+      res.status(201).send(newPalet);
+    } catch (error) {
+      if (error.code === 11000) {
+        res.status(400).send('Flavor already registered!');
+      }
+    }
+  }
 
-export const updatePaletController = async (req, res) => {
-  const idParam = req.params.id;
-  const paletEdit = req.body;
-  // const chosenPalet = paletsService.findPaletByIdService(idParam);
-  // if (!chosenPalet) {
-  //   return res.status(404).send({ message: 'Palet not found!' });
-  // } //Not mongoDB
+  async updatePaletController(req, res) {
+    const idParam = req.params.id;
+    const paletEdit = req.body;
+    try {
+      const updatedPalet = await paletsservice.updatePaletService(
+        idParam,
+        paletEdit,
+      );
 
-  // if (!mongoose.Types.ObjectId.isValid(idParam)) {
-  //   res.status(400).send({ message: 'Invalid ID!' });
-  //   return;
-  // } //in middleware
+      res.send(updatedPalet);
+    } catch (error) {
+      if (error.code === 11000) {
+        res.status(400).send('Flavor already registered!');
+      }
+    }
+  }
 
-  // if (
-  //   !paletEdit ||
-  //   !paletEdit.flavor ||
-  //   !paletEdit.description ||
-  //   !paletEdit.photo ||
-  //   !paletEdit.price
-  // ) {
-  //   return res.status(400).send({
-  //     message:
-  //       'You have not filled all the required info to edit the palet into the menu!',
-  //   });
-  // } //in middleware
-  const updatedPalet = await paletsService.updatePaletService(
-    idParam,
-    paletEdit,
-  );
+  async deletePaletController(req, res) {
+    const idParam = req.params.id;
 
-  res.send(updatedPalet);
-};
+    await paletsservice.deletePaletService(idParam);
+    res.send({ message: 'Palet deleted with success!' });
+  }
+}
 
-export const deletePaletController = async (req, res) => {
-  const idParam = req.params.id;
-  // const chosenPalet = paletsService.findPaletByIdService(idParam);
-  // if (!idParam) {
-  //   return res.status(404).send({ message: 'Palet not found!' });
-  // } // Not MondoDB
-  // if (!mongoose.Types.ObjectId.isValid(idParam)) {
-  //   res.status(400).send({ message: 'Invalid ID!' });
-  //   return;
-  // } // In middleware
-
-  await paletsService.deletePaletService(idParam);
-  res.send({ message: 'Palet deleted with success!' });
-};
-
-// module.exports = {
-//   findPaletasController,
-//   findPaletaByIdController,
-//   createPaletaController,
-//   updatePaletaController,
-//   deletePaletaController,
-// };
+export default controllerPalets;
